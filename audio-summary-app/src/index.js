@@ -3,10 +3,14 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import logo from './img/logo.png'; // Assurez-vous que le chemin du logo est correct
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
+    <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
+      <img src={logo} alt="Logo" style={{ width: '200px', height: '200' }} /> {/* Ajustez la taille selon vos besoins */}
+    </div>
     <App />
   </React.StrictMode>
 );

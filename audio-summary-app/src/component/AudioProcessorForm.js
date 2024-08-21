@@ -67,7 +67,7 @@ const AudioProcessorForm = () => {
             <h1>Audio Processor Summary</h1>
             <form onSubmit={handleSubmit}>
                 <div>
-                    <label>API Key:</label>
+                    <label>Open AI - API Key :</label>
                     <input
                         type="text"
                         value={apiKey}
@@ -84,8 +84,8 @@ const AudioProcessorForm = () => {
                     className="sound-wave"
                     onStop={onStop}
                     onData={onData}
-                    strokeColor="#000000"
-                    backgroundColor="#FF4081"
+                    strokeColor="#fff"
+                    backgroundColor="#a86161"
                 />
                 <button type="submit">Process Audio</button>
             </form>
