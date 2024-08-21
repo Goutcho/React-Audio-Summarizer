@@ -1,5 +1,10 @@
 # Audio Processor Application
 
+![Overview of this application](./audio-summary-app/src/img/overview.png)
+
+This project is a full-stack application that processes audio files for transcription and summarization. The backend is a Python-based API using Docker, while the frontend is a React application that allows users to record audio, submit it to the API, and view or download the results.
+
+
 This project is a full-stack application that processes audio files for transcription and summarization. The backend is a Python-based API using Docker, while the frontend is a React application that allows users to record audio, submit it to the API, and view or download the results.
 
 ## Features
