@@ -1,6 +1,6 @@
 import logging
 import os
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 import main  # Import your main processing code
 
@@ -36,16 +36,38 @@ def process_audio():
 
     try:
         text, summary = main.process_audio(file_path, api_key)
+
+        # Delete the uploaded file after processing
         os.remove(file_path)
+
+        # Get base filename without extension
+        base_name = os.path.splitext(audio_file.filename)[0]
+
+        # Create paths for transcription and summary
+        transcription_filename = f"{base_name}_transcription.txt"
+        summary_filename = f"{base_name}_summary.txt"
+
+        transcription_path = os.path.join('text_transcription', transcription_filename)
+        summary_path = os.path.join('text_summarize', summary_filename)
+
         logging.debug("Processing complete, sending response")
         return jsonify({
             'transcribed_text': text,
             'summarized_text': summary,
-            'download_link': f'/path/to/saved/mp3/{audio_file.filename}'
+            'transcription_link': f'/text_transcription/{transcription_filename}',
+            'summary_link': f'/text_summarize/{summary_filename}'
         }), 200
     except Exception as e:
         logging.error(f"Error processing audio: {str(e)}")
         return jsonify({'error': str(e)}), 500
+
+@app.route('/text_transcription/<filename>', methods=['GET'])
+def download_transcription(filename):
+    return send_from_directory('text_transcription', filename)
+
+@app.route('/text_summarize/<filename>', methods=['GET'])
+def download_summary(filename):
+    return send_from_directory('text_summarize', filename)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8000)

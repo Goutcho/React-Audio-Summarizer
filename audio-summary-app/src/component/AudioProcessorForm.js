@@ -12,8 +12,8 @@ const AudioProcessorForm = () => {
 
     const startRecording = () => {
         setRecord(true);
-        console.log("Recording started after user interaction.");
-    };    
+        console.log("Recording started.");
+    };
 
     const stopRecording = () => {
         setRecord(false);
@@ -21,13 +21,13 @@ const AudioProcessorForm = () => {
     };
 
     const onData = (recordedBlob) => {
-        console.log('Chunk of real-time data:', recordedBlob);
+        console.log('Real-time data:', recordedBlob);
     };
 
     const onStop = (recordedBlob) => {
         console.log('Recorded Blob:', recordedBlob);
         setBlob(recordedBlob.blob);
-        console.log('Blob set for submission:', recordedBlob.blob);
+        console.log('Blob ready for submission:', recordedBlob.blob);
     };
 
     const handleSubmit = async (e) => {
@@ -38,7 +38,7 @@ const AudioProcessorForm = () => {
             console.error('No audio file recorded.');
             return;
         }
-    
+
         const audioFile = new File([blob], 'audio.webm', { type: blob.type });
         const formData = new FormData();
         formData.append('api_key', apiKey);
@@ -59,14 +59,14 @@ const AudioProcessorForm = () => {
             setError('Error processing audio.');
             setResult(null);
         }
-    };    
+    };
 
     return (
         <div className="container">
             <h1>Audio Processor Summary</h1>
             <form onSubmit={handleSubmit}>
                 <div>
-                    <label>Open AI - API Key :</label>
+                    <label>OpenAI API Key:</label>
                     <input
                         type="text"
                         value={apiKey}
