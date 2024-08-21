@@ -5,9 +5,7 @@ import openai
 from datetime import datetime
 import logging
 from pathlib import Path
-from gtts import gTTS
 import subprocess
-
 
 # Configure logging
 logging.basicConfig(
@@ -53,7 +51,7 @@ class AudioProcessor:
         try:
             openai.api_key = api_key
             response = openai.ChatCompletion.create(
-                model="gpt-4o",
+                model="gpt-4",
                 messages=[
                 {"role": "system",
                     "content": "You are an assistant that summarizes audio texts in French."},
@@ -66,19 +64,6 @@ class AudioProcessor:
         except Exception as e:
             logging.error(f"Error summarizing text: {e}")
             return ""
-
-    def text_to_speech(self, text: str, file_path: str, language: str = 'fr'):
-        try:
-            # Ensure the directory exists
-            output_dir = os.path.dirname(file_path)
-            os.makedirs(output_dir, exist_ok=True)
-            
-            tts = gTTS(text, lang=language)
-            tts.save(file_path)
-            logging.info(f"Audio saved to {file_path}")
-        except Exception as e:
-            logging.error(f"Error converting text to speech: {e}")
-
 
 def generate_output_filename(base_name: str, suffix: str, extension: str) -> str:
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -132,7 +117,15 @@ def process_audio(file_path: str, api_key: str):
     summary_filename = generate_output_filename(base_name, "summary", "txt")
     summary_writer.write_to_file(summary_filename, summary)
 
-    audio_file_path = Path("audio_summarize") / generate_output_filename(base_name, "summary", "mp3")
-    audio_processor.text_to_speech(summary, str(audio_file_path))
-
     return text, summary
+
+if __name__ == "__main__":
+    # Example usage:
+    file_path = "path_to_your_audio_file.webm"
+    api_key = "your_openai_api_key"
+    transcribed_text, summarized_text = process_audio(file_path, api_key)
+    
+    if transcribed_text and summarized_text:
+        print("Transcription and summarization completed successfully.")
+    else:
+        print("There was an error in processing the audio.")

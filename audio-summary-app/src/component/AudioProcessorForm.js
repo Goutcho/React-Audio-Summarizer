@@ -39,7 +39,6 @@ const AudioProcessorForm = () => {
             return;
         }
     
-        // Ensure the correct file type and name are set, or handle conversion
         const audioFile = new File([blob], 'audio.webm', { type: blob.type });
         const formData = new FormData();
         formData.append('api_key', apiKey);
@@ -93,8 +92,9 @@ const AudioProcessorForm = () => {
                 <div className="result">
                     <h2>Result</h2>
                     <p><strong>Transcribed Text:</strong> {result.transcribed_text}</p>
+                    <a href={result.transcription_link} download="transcription.txt">Download Transcription as TXT</a>
                     <p><strong>Summarized Text:</strong> {result.summarized_text}</p>
-                    <a href={result.download_link} download="summary.mp3">Download Summary as MP3</a>
+                    <a href={result.summary_link} download="summary.txt">Download Summary as TXT</a>
                 </div>
             )}
             {error && <p className="error">{error}</p>}
