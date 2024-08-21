@@ -59,7 +59,7 @@ Navigate to the frontend directory and install dependencies:
 
 ```bash
 cd ../audio-summary-api
-npm install
+npm install --legacy-peer-deps
 ```
 
 Start the React application:

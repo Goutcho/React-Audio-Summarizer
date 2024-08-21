@@ -28,7 +28,7 @@ cd audio-summary-app
 Install the necessary dependencies using npm:
 
 ```bash
-npm install
+npm install --legacy-peer-deps
 ```
 
 ### 3. Run the Application
